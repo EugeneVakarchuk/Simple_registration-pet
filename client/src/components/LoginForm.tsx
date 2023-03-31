@@ -1,12 +1,32 @@
 import React, { FC, useState } from 'react';
+import { useAppDispatch } from '../hooks/redux';
+import { setAuth } from '../redux/authSlice';
+import { login } from '../redux/userSlice';
+import AuthService from '../services/AuthService';
 
 const LoginForm: FC = () => {
 
-  const [email, setEmail] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
+  const [email, setEmail] = useState<string>('asjgldsflk@ds.com');
+  const [password, setPassword] = useState<string>('fdsadigkdssdf');
+
+  const dispatch = useAppDispatch();
+
+
+  const loginButtton = async () => {
+    const response = await AuthService.login(email, password);
+    if (!!response) {
+      dispatch(login({
+        email: response.data.user.email,
+        id: response.data.user.id
+      }))
+      dispatch(setAuth(true))
+      localStorage.setItem('token', response.data.accessToken)
+    }
+  }
 
   return (
     <div>
+      <h2>LOGIN</h2>
       <input
         type='text'
         placeholder='Email'
@@ -19,7 +39,7 @@ const LoginForm: FC = () => {
         onChange={e => setPassword(e.target.value)}
         value={password}
       />
-      <button>Login</button>
+      <button onClick={loginButtton}>Login</button>
     </div>
   );
 };

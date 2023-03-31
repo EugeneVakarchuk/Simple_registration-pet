@@ -7,6 +7,7 @@ const initialState: IUser = {
   id: '',
 }
 
+
 export const userSlice = createSlice({
   name: 'user',
   initialState,
@@ -18,11 +19,20 @@ export const userSlice = createSlice({
       } catch (e) {
         console.log(e)
       }
+    },
+    logout(state) {
+      try {
+        state.email = null
+        state.id = null
+      } catch (e) {
+        console.log(e)
+      }
     }
   }
 })
 
 export default userSlice.reducer;
 export const {
-  login
+  login,
+  logout
 } = userSlice.actions;
