@@ -13,6 +13,7 @@
     "allowSyntheticDefaultImports": true,
     "moduleResolution": "Node",
     "types": [
+      "node",
       "react/next",
       "react-dom/next"
     ],

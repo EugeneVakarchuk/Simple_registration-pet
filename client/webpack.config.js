@@ -1,6 +1,11 @@
 const path = require('path');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HTMLWebpackPlugin = require('html-webpack-plugin');
+const dotenv = require('dotenv');
+const Dotenv = require('dotenv-webpack');
+
+dotenv.config();
+
 
 module.exports = {
   mode: "development",
@@ -16,8 +21,10 @@ module.exports = {
     new HTMLWebpackPlugin({
       template: "./src/index.html"
     }),
-    new CleanWebpackPlugin()
+    new CleanWebpackPlugin(),
+    new Dotenv(),
   ],
+
   module: {
     rules: [
       {
@@ -56,8 +63,12 @@ module.exports = {
       }
     ]
   },
-  resolve:
-  {
+  resolve: {
+    fallback: {
+      fs: false,
+      path: require.resolve('path-browserify'),
+      os: require.resolve('os-browserify/browser')
+    },
     extensions: ['.tsx', '.ts', '.js'],
-  }
+  },
 }
