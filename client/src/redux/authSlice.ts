@@ -1,7 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  isAuth: false
+  isAuth: false,
+  succesReg: false
 }
 
 export const authSlice = createSlice({
@@ -14,11 +15,19 @@ export const authSlice = createSlice({
       } catch (e) {
         console.log(e)
       }
+    },
+    setSuccesReg(state) {
+      try {
+        state.succesReg = true
+      } catch (e) {
+        console.log(e)
+      }
     }
   }
 })
 
 export default authSlice.reducer;
 export const {
-  setAuth
+  setAuth,
+  setSuccesReg
 } = authSlice.actions;

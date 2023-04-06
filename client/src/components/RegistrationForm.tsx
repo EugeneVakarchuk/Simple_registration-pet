@@ -1,15 +1,21 @@
 import React, { useState } from 'react';
 import AuthService from '../services/AuthService';
+import { useAppDispatch } from '../hooks/redux';
+import { setSuccesReg } from '../redux/authSlice';
 
 const RegistrationForm = () => {
 
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
 
+  const dispatch = useAppDispatch();
 
   const registerButton = async () => {
     try {
       const response = await AuthService.registration(email, password);
+      if (response) {
+        dispatch(setSuccesReg())
+      }
     } catch (e) {
       if (e.response) {
         console.log(e.response.data);

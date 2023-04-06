@@ -3,6 +3,7 @@ import { useAppDispatch } from '../hooks/redux';
 import { setAuth } from '../redux/authSlice';
 import { login } from '../redux/userSlice';
 import AuthService from '../services/AuthService';
+import { Link, useNavigate } from 'react-router-dom';
 
 const LoginForm: FC = () => {
 
@@ -10,6 +11,7 @@ const LoginForm: FC = () => {
   const [password, setPassword] = useState<string>('fdsadigkdssdf');
 
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
 
   const loginButtton = async () => {
@@ -21,6 +23,7 @@ const LoginForm: FC = () => {
       }))
       dispatch(setAuth(true))
       localStorage.setItem('token', response.data.accessToken)
+      navigate('/main')
     }
   }
 
@@ -39,7 +42,7 @@ const LoginForm: FC = () => {
         onChange={e => setPassword(e.target.value)}
         value={password}
       />
-      <button onClick={loginButtton}>Login</button>
+      <Link to={'main'} onClick={loginButtton}>Login</Link>
     </div>
   );
 };
