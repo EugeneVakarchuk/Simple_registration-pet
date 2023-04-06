@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import classes from './app.module.less';
 import MainPage from "./pages/MainPage";
 import { useAppDispatch, useAppSelector } from "./hooks/redux";
@@ -17,6 +17,8 @@ const App: React.FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
+  const [isLoading, setIsLoading] = useState<boolean>(false)
+
   useEffect(() => {
     if (!!localStorage.getItem('token')) {
       const checkAuth = async () => {
@@ -31,10 +33,19 @@ const App: React.FC = () => {
           email: user.email,
           id: user.id
         }))
-        navigate('/main');
+        setIsLoading(false);
+      }).catch(error => {
+        setIsLoading(false);
+        console.log(error)
       })
     }
-  }, [dispatch, navigate])
+  }, [])
+
+  useEffect(() => {
+    if (!isLoading && isAuth) {
+      navigate('/main')
+    }
+  }, [isLoading, isAuth])
 
   return (
     <div className={classes.App}>
