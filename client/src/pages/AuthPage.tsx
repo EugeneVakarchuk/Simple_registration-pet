@@ -2,7 +2,7 @@ import React, { FC, useEffect, useState } from 'react';
 import LoginForm from '../components/LoginForm';
 import RegistrationForm from '../components/RegistrationForm';
 import { useAppSelector } from '../hooks/redux';
-import { Navigate, redirect } from 'react-router-dom';
+import { redirect } from 'react-router-dom';
 
 const AuthPage: FC = () => {
 
