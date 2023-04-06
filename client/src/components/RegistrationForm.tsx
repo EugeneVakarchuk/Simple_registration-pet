@@ -14,7 +14,7 @@ const RegistrationForm = () => {
     try {
       const response = await AuthService.registration(email, password);
       if (response) {
-        dispatch(setSuccesReg())
+        dispatch(setSuccesReg(true))
       }
     } catch (e) {
       if (e.response) {

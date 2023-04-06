@@ -1,8 +1,9 @@
 import React, { FC, useEffect, useState } from 'react';
 import LoginForm from '../components/LoginForm';
 import RegistrationForm from '../components/RegistrationForm';
-import { useAppSelector } from '../hooks/redux';
+import { useAppDispatch, useAppSelector } from '../hooks/redux';
 import { redirect } from 'react-router-dom';
+import { setSuccesReg } from '../redux/authSlice';
 
 const AuthPage: FC = () => {
 
@@ -11,6 +12,7 @@ const AuthPage: FC = () => {
   const [selectedForm, setSelectForm] = useState<selectForm>('login');
   const regSucces = useAppSelector(state => state.authReducer.succesReg);
   const isAuth = useAppSelector(state => state.authReducer.isAuth);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     if (!isAuth) {
@@ -20,6 +22,7 @@ const AuthPage: FC = () => {
 
   const buttreg = () => {
     setSelectForm('registration')
+    dispatch(setSuccesReg(false))
   }
 
   const buttlog = () => {

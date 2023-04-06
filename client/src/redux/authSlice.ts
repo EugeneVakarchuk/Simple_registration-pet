@@ -16,9 +16,9 @@ export const authSlice = createSlice({
         console.log(e)
       }
     },
-    setSuccesReg(state) {
+    setSuccesReg(state, action) {
       try {
-        state.succesReg = true
+        state.succesReg = action.payload
       } catch (e) {
         console.log(e)
       }
