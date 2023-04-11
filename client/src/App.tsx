@@ -51,7 +51,7 @@ const App: React.FC = () => {
     <div className={classes.App}>
       <Routes>
         <Route path='/' element={<Navigate to='/main' />} />
-        <Route path='auth' element={<AuthPage />} />
+        <Route path='auth/*' element={<AuthPage />} />
         <Route path="/main" element={
           <RequireAuth>
             <MainPage />
