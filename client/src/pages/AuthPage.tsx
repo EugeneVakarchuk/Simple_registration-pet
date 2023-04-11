@@ -1,9 +1,11 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useEffect, useRef, useState } from 'react';
 import LoginForm from '../components/LoginForm';
 import RegistrationForm from '../components/RegistrationForm';
-import { useAppDispatch, useAppSelector } from '../hooks/redux';
+import { useAppSelector } from '../hooks/redux';
 import { redirect } from 'react-router-dom';
-import { setSuccesReg } from '../redux/authSlice';
+import Toggle from '../ui/Toggle';
+import classes from '../styles/pages.module.less'
+
 
 const AuthPage: FC = () => {
 
@@ -12,7 +14,7 @@ const AuthPage: FC = () => {
   const [selectedForm, setSelectForm] = useState<selectForm>('login');
   const regSucces = useAppSelector(state => state.authReducer.succesReg);
   const isAuth = useAppSelector(state => state.authReducer.isAuth);
-  const dispatch = useAppDispatch();
+  const formRef = useRef();
 
   useEffect(() => {
     if (!isAuth) {
@@ -20,19 +22,20 @@ const AuthPage: FC = () => {
     }
   })
 
-  const buttreg = () => {
-    setSelectForm('registration')
-    dispatch(setSuccesReg(false))
+  const changeFormToLogin = () => {
+    setSelectForm('login')
   }
 
-  const buttlog = () => {
-    setSelectForm('login')
+  const changeFormToRegistration = () => {
+    setSelectForm('registration')
   }
 
   return (
     <div>
-      <button onClick={buttreg}>REG</button>
-      <button onClick={buttlog}>LOGIN</button>
+      <div className={classes.toggleWrapper}>
+        <Toggle onClick={changeFormToLogin}>Login</Toggle>
+        <Toggle onClick={changeFormToRegistration}>Sing up</Toggle>
+      </div>
       {
         selectedForm === 'login' || regSucces
           ? <LoginForm />
@@ -41,5 +44,6 @@ const AuthPage: FC = () => {
     </div>
   );
 };
+
 
 export default AuthPage;

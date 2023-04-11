@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import classes from './app.module.less';
+import classes from './styles/app.module.less';
 import MainPage from "./pages/MainPage";
 import { useAppDispatch, useAppSelector } from "./hooks/redux";
 import { setAuth } from "./redux/authSlice";

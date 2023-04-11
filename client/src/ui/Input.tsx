@@ -1,10 +1,27 @@
-import React, { FC } from 'react';
+import React, { FC, ChangeEvent } from 'react';
+import classes from '../styles/ui.module.less';
+import Label from './Label';
 
-const Input: FC = () => {
+type props = {
+  value: string
+  type: string
+  onChange: (event: ChangeEvent<HTMLInputElement>) => void;
+  placeholder: string
+  label: string
+}
+
+const Input: FC<props> = (props) => {
   return (
-    <input>
-
-    </input>
+    <>
+      <Label>{props.label}</Label>
+      <input
+        type={props.type}
+        value={props.value}
+        onChange={props.onChange}
+        placeholder={props.placeholder}
+        className={classes.input}
+      />
+    </>
   );
 };
 

@@ -3,16 +3,22 @@ import { useAppDispatch } from '../hooks/redux';
 import { setAuth } from '../redux/authSlice';
 import { login } from '../redux/userSlice';
 import AuthService from '../services/AuthService';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import Button from '../ui/Button';
+import classes from '../styles/comp.module.less'
+import Input from '../ui/Input';
 
-const LoginForm: FC = () => {
+type props = {
+  ref?: React.MutableRefObject<undefined>
+}
 
-  const [email, setEmail] = useState<string>('asjgldsflk@ds.com');
-  const [password, setPassword] = useState<string>('fdsadigkdssdf');
+const LoginForm: FC<props> = () => {
+
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-
 
   const loginButtton = async () => {
     const response = await AuthService.login(email, password);
@@ -28,21 +34,28 @@ const LoginForm: FC = () => {
   }
 
   return (
-    <div>
-      <h2>LOGIN</h2>
-      <input
-        type='text'
-        placeholder='Email'
-        onChange={e => setEmail(e.target.value)}
-        value={email}
-      />
-      <input
-        type='password'
-        placeholder='Password'
-        onChange={e => setPassword(e.target.value)}
-        value={password}
-      />
-      <Link to={'main'} onClick={loginButtton}>Login</Link>
+    <div className={classes.form}>
+      <div className={classes.formInpudContainer}>
+        <div className={classes.formInputWrapper}>
+          <Input
+            type='text'
+            placeholder='example@email.com'
+            onChange={e => setEmail(e.target.value)}
+            value={email}
+            label='Email'
+          />
+        </div>
+        <div className={classes.formInputWrapper}>
+          <Input
+            type='password'
+            placeholder='**********'
+            onChange={e => setPassword(e.target.value)}
+            value={password}
+            label='Password'
+          />
+        </div>
+      </div>
+      <Button onClick={loginButtton}>Login</Button>
     </div>
   );
 };

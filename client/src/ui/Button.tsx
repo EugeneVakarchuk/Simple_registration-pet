@@ -1,9 +1,15 @@
-import React, { FC } from 'react';
+import React, { FC, MouseEvent, ReactNode } from 'react';
+import classes from '../styles/ui.module.less';
 
-const Button: FC = () => {
+type props = {
+  children: ReactNode;
+  onClick: (event: MouseEvent<HTMLButtonElement>) => void;
+}
+
+const Button: FC<props> = ({ children, onClick }) => {
   return (
-    <button>
-
+    <button className={classes.button} onClick={onClick}>
+      {children}
     </button>
   );
 };
