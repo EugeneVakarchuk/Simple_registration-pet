@@ -4,6 +4,7 @@ import classes from '../styles/ui.module.less';
 type props = {
   children: string
   onClick: (event: MouseEvent<HTMLButtonElement>) => void;
+  active?: boolean
 }
 
 const Toggle: FC<props> = (props) => {
