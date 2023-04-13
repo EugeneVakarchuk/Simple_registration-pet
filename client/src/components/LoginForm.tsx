@@ -25,7 +25,7 @@ const LoginForm: FC<props> = () => {
     if (!!response) {
       dispatch(login({
         email: response.data.user.email,
-        id: response.data.user.id
+        id: response.data.user._id
       }))
       dispatch(setAuth(true))
       localStorage.setItem('token', response.data.accessToken)

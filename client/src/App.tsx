@@ -23,6 +23,7 @@ const App: React.FC = () => {
     if (!!localStorage.getItem('token')) {
       const checkAuth = async () => {
         const response = await axios.get(`${process.env.API_URL}/refresh`, { withCredentials: true });
+        localStorage.setItem('token', response.data.accessToken);
         return response;
       }
       const response = checkAuth();

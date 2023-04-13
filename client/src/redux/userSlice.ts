@@ -4,7 +4,7 @@ import { IUser } from "../models/IUser";
 
 const initialState: IUser = {
   email: '',
-  id: '',
+  _id: '',
 }
 
 
@@ -15,7 +15,7 @@ export const userSlice = createSlice({
     login(state, action) {
       try {
         state.email = action.payload.email;
-        state.id = action.payload.id
+        state._id = action.payload.id
       } catch (e) {
         console.log(e)
       }
@@ -23,7 +23,7 @@ export const userSlice = createSlice({
     logout(state) {
       try {
         state.email = null
-        state.id = null
+        state._id = null
       } catch (e) {
         console.log(e)
       }

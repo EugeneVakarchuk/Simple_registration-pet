@@ -6,6 +6,7 @@ import Input from '../ui/Input';
 import Button from '../ui/Button';
 import classes from '../styles/comp.module.less'
 import Checkbox from '../ui/Checkbox';
+import { useNavigate } from 'react-router';
 
 type props = {
   ref?: React.MutableRefObject<undefined>
@@ -15,7 +16,7 @@ const RegistrationForm: FC<props> = () => {
 
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
-
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
   const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -32,6 +33,7 @@ const RegistrationForm: FC<props> = () => {
       const response = await AuthService.registration(email, password);
       if (response) {
         dispatch(setSuccesReg(true))
+        navigate('/auth/login')
       }
     } catch (e) {
       if (e.response) {
