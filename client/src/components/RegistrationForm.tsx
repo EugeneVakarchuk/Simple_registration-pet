@@ -4,7 +4,7 @@ import { useAppDispatch } from '../hooks/redux';
 import { setSuccesReg } from '../redux/authSlice';
 import Input from '../ui/Input';
 import Button from '../ui/Button';
-import classes from '../styles/comp.module.less'
+import compStyles from '../styles/comp.module.less'
 import Checkbox from '../ui/Checkbox';
 import { useNavigate } from 'react-router';
 
@@ -45,9 +45,9 @@ const RegistrationForm: FC<props> = () => {
   }
 
   return (
-    <div className={classes.form}>
-      <div className={classes.formInpudContainer}>
-        <div className={classes.formInputWrapper}>
+    <div className={compStyles.form}>
+      <div className={compStyles.formInpudContainer}>
+        <div className={compStyles.formInputWrapper}>
           <Input
             type='text'
             placeholder='example@email.com'
@@ -56,7 +56,7 @@ const RegistrationForm: FC<props> = () => {
             label='Email'
           />
         </div>
-        <div className={classes.formInputWrapper}>
+        <div className={compStyles.formInputWrapper}>
           <Input
             type='password'
             placeholder='**********'

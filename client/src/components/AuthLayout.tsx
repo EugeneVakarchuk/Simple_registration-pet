@@ -2,7 +2,7 @@ import React, { FC, useRef, useState } from 'react';
 import Toggle from '../ui/Toggle';
 import compStyles from '../styles/comp.module.less';
 import pageStyles from '../styles/pages.module.less'
-import { Outlet, useNavigate, useLocation } from 'react-router';
+import { Outlet, useNavigate } from 'react-router';
 import { SwitchTransition, CSSTransition } from 'react-transition-group';
 import animationStyles from '../styles/formAnimation.module.less';
 
