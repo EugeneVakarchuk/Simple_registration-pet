@@ -5,7 +5,7 @@ import { login } from '../redux/userSlice';
 import AuthService from '../services/AuthService';
 import { useNavigate } from 'react-router-dom';
 import Button from '../ui/Button';
-import classes from '../styles/comp.module.less'
+import compStyles from '../styles/comp.module.less'
 import Input from '../ui/Input';
 
 type props = {
@@ -34,9 +34,9 @@ const LoginForm: FC<props> = () => {
   }
 
   return (
-    <div className={classes.form}>
-      <div className={classes.formInpudContainer}>
-        <div className={classes.formInputWrapper}>
+    <div className={compStyles.form}>
+      <div className={compStyles.formInpudContainer}>
+        <div className={compStyles.formInputWrapper}>
           <Input
             type='text'
             placeholder='example@email.com'
@@ -45,7 +45,7 @@ const LoginForm: FC<props> = () => {
             label='Email'
           />
         </div>
-        <div className={classes.formInputWrapper}>
+        <div className={compStyles.formInputWrapper}>
           <Input
             type='password'
             placeholder='**********'
@@ -55,7 +55,9 @@ const LoginForm: FC<props> = () => {
           />
         </div>
       </div>
-      <Button onClick={loginButtton}>Login</Button>
+      <div className={compStyles.loginButtonWrapper}>
+        <Button onClick={loginButtton}>Login</Button>
+      </div>
     </div>
   );
 };

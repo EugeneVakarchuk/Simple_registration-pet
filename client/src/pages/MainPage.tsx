@@ -8,7 +8,6 @@ import Button from '../ui/Button';
 import pageStyles from '../styles/pages.module.less';
 import { IUser } from '../models/IUser';
 import UserService from '../services/UserService';
-import compStyles from '../styles/comp.module.less';
 import UserItem from '../components/UserItem';
 
 const MainPage = () => {
