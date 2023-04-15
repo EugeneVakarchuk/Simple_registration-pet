@@ -31,6 +31,7 @@ const App: React.FC = () => {
         const user = data?.data?.user
         dispatch(setAuth(true));
         dispatch(login({
+          username: user.username,
           email: user.email,
           id: user.id
         }))

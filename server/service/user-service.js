@@ -5,7 +5,7 @@ const UserDto = require('../dto/user-dto');
 const ApiError = require('../exceptions/api-error');
 
 class UserService {
-  async registration(email, password) {
+  async registration(username, email, password) {
     const candidate = await UserModel.findOne({ email });
     if (candidate) {
       throw ApiError.BadRequest("User with this e-mail address already exists.");
@@ -15,6 +15,7 @@ class UserService {
 
 
     const user = await UserModel.create({
+      username,
       email,
       password: hashPassword,
     });

@@ -9,13 +9,14 @@ import pageStyles from '../styles/pages.module.less';
 import { IUser } from '../models/IUser';
 import UserService from '../services/UserService';
 import UserItem from '../components/UserItem';
+import UserTextValue from '../ui/UserTextValue';
 
 const MainPage = () => {
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const { email, _id } = useAppSelector(state => state.loginReducer)
+  const { username, email, _id } = useAppSelector(state => state.loginReducer)
 
   const logoutButton = () => {
     dispatch(logout());
@@ -37,14 +38,25 @@ const MainPage = () => {
     }
   }
 
+  const clearUsersList = () => {
+    setUsers(null)
+    setUsersLoaded(false);
+  }
+
   return (
     <div className={pageStyles.mainContainer}>
       <header className={pageStyles.header}>
         <div>
-          <h2>Hello</h2>
+          <h2>Hello {username}</h2>
           <div className={pageStyles.informationWrapper}>
-            <span>Your id: {_id}</span>
-            <span>Your email: {email}</span>
+            <UserTextValue
+              valueName='Your id'
+              value={_id}
+            />
+            <UserTextValue
+              valueName='Your email:'
+              value={email}
+            />
           </div>
         </div>
         <div className={pageStyles.headerButtonWrapper}>
@@ -52,9 +64,17 @@ const MainPage = () => {
         </div>
       </header>
       <div className={pageStyles.getUsersContainer}>
-        <div className={pageStyles.pageButtonWrapper}>
-          <Button onClick={getUsers}>Get users list</Button>
-        </div>
+        {
+          !usersLoaded
+            ?
+            <div className={pageStyles.pageButtonWrapper}>
+              <Button onClick={getUsers}>Get users list</Button>
+            </div>
+            :
+            <div className={pageStyles.pageButtonWrapper}>
+              <Button onClick={clearUsersList}>Clear</Button>
+            </div>
+        }
         <div>
           {
             !!usersLoaded
@@ -65,6 +85,7 @@ const MainPage = () => {
                     return (
                       <UserItem
                         key={index}
+                        username={el.username}
                         id={el._id}
                         email={el.email}
                         index={index + 1}

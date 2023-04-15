@@ -24,6 +24,7 @@ const LoginForm: FC<props> = () => {
     const response = await AuthService.login(email, password);
     if (!!response) {
       dispatch(login({
+        username: response.data.user.username,
         email: response.data.user.email,
         id: response.data.user._id
       }))

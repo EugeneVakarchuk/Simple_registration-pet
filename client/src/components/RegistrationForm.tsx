@@ -14,8 +14,9 @@ type props = {
 
 const RegistrationForm: FC<props> = () => {
 
-  const [email, setEmail] = useState<string>('')
-  const [password, setPassword] = useState<string>('')
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const [username, setUsername] = useState<string>('');
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
@@ -27,10 +28,14 @@ const RegistrationForm: FC<props> = () => {
     setPassword(event.target.value);
   };
 
+  const handleUsernameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setUsername(event.target.value);
+  };
+
 
   const registerButton = async () => {
     try {
-      const response = await AuthService.registration(email, password);
+      const response = await AuthService.registration(username, email, password);
       if (response) {
         dispatch(setSuccesReg(true))
         navigate('/auth/login')
@@ -47,6 +52,15 @@ const RegistrationForm: FC<props> = () => {
   return (
     <div className={compStyles.form}>
       <div className={compStyles.formInpudContainer}>
+        <div className={compStyles.formInputWrapper}>
+          <Input
+            type='text'
+            placeholder='Username'
+            onChange={handleUsernameChange}
+            value={username}
+            label='Username'
+          />
+        </div>
         <div className={compStyles.formInputWrapper}>
           <Input
             type='text'

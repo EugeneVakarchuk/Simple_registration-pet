@@ -1,8 +1,10 @@
 import React, { FC } from 'react';
 import compStyles from '../styles/comp.module.less';
+import UserTextValue from '../ui/UserTextValue';
 
 type props = {
   index: number
+  username: string
   id: string
   email: string
 }
@@ -12,8 +14,18 @@ const UserItem: FC<props> = (props) => {
     <div className={compStyles.userItemConainer}>
       <span>{props.index}</span>
       <div className={compStyles.userInformationContainer}>
-        <span>id: {props.id}</span>
-        <span>email: {props.email}</span>
+        <UserTextValue
+          valueName='id'
+          value={props.id}
+        />
+        <UserTextValue
+          valueName='username'
+          value={props.username}
+        />
+        <UserTextValue
+          valueName='email'
+          value={props.email}
+        />
       </div>
     </div>
   );
