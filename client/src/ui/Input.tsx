@@ -1,27 +1,32 @@
-import React, { FC, ChangeEvent } from 'react';
-import classes from '../styles/ui.module.less';
-import Label from './Label';
+import React, { FC, InputHTMLAttributes } from 'react';
+import { UseFormRegisterReturn, MultipleFieldErrors } from "react-hook-form";
 
-type props = {
-  value: string
-  type: string
-  onChange: (event: ChangeEvent<HTMLInputElement>) => void;
-  placeholder: string
-  label: string
+interface props extends InputHTMLAttributes<HTMLInputElement> {
+  label: string;
+  placeholder: string;
+  type: string;
+  errors?: string | undefined;
+  register: UseFormRegisterReturn
 }
 
-const Input: FC<props> = (props) => {
+const Input: FC<props> = ({
+  label,
+  placeholder,
+  type,
+  errors,
+  register,
+  ...inputProps
+}) => {
+
   return (
-    <>
-      <Label>{props.label}</Label>
-      <input
-        type={props.type}
-        value={props.value}
-        onChange={props.onChange}
-        placeholder={props.placeholder}
-        className={classes.input}
-      />
-    </>
+    <div>
+      <label htmlFor={inputProps.id}>{label}
+        <input type={type} placeholder={placeholder} {...register} {...inputProps} />
+      </label>
+      <div>
+        {errors && <span>{errors}</span>}
+      </div>
+    </div>
   );
 };
 

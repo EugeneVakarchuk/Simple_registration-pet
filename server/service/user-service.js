@@ -33,11 +33,11 @@ class UserService {
   async login(email, password) {
     const user = await UserModel.findOne({ email })
     if (!user) {
-      throw ApiError.BadRequest("User with this email not found")
+      throw ApiError.BadRequest("User with this email not found", "email")
     };
     const isPassEquals = await bcrypt.compare(password, user.password)
     if (!isPassEquals) {
-      throw ApiError.BadRequest("Invalid password")
+      throw ApiError.BadRequest("Invalid password", "password")
     };
     const userDto = new UserDto(user);
     const tokens = tokenService.generateTokens({ ...userDto });
