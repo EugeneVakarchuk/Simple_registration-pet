@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import compStyles from '../styles/comp.module.less'
 import Input from '../ui/Input';
 import { useForm } from 'react-hook-form';
+import SubmitButton from '../ui/SubmitButton';
 
 type props = {
   ref?: React.MutableRefObject<undefined>
@@ -82,7 +83,7 @@ const LoginForm: FC<props> = () => {
           })}
         />
         <Input
-          label='password'
+          label='Password'
           placeholder='********'
           type='password'
           errors={errors.password?.message}
@@ -92,7 +93,10 @@ const LoginForm: FC<props> = () => {
         />
       </div>
       <div className={compStyles.loginButtonWrapper}>
-        <input type="submit" disabled={!isValid} />
+        <SubmitButton
+          isValid={!isValid}
+          text='Login'
+        />
       </div>
     </form>
   );

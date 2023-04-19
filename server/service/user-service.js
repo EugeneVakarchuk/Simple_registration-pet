@@ -6,9 +6,13 @@ const ApiError = require('../exceptions/api-error');
 
 class UserService {
   async registration(username, email, password) {
-    const candidate = await UserModel.findOne({ email });
-    if (candidate) {
-      throw ApiError.BadRequest("User with this e-mail address already exists.");
+    const emailCanditate = await UserModel.findOne({ email });
+    if (emailCanditate) {
+      throw ApiError.BadRequest("User with this e-mail address already exists.", "email");
+    };
+    const usernameCanditate = await UserModel.findOne({ username });
+    if (usernameCanditate) {
+      throw ApiError.BadRequest("User with this username already exists.", "username");
     };
     const salt = await bcrypt.genSalt(7)
     const hashPassword = await bcrypt.hash(password, salt);

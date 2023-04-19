@@ -1,11 +1,13 @@
 import React, { FC, useState } from 'react';
 import AuthService from '../services/AuthService';
 import { useAppDispatch } from '../hooks/redux';
-import { setSuccesReg } from '../redux/authSlice';
 import compStyles from '../styles/comp.module.less'
 import { useNavigate } from 'react-router';
 import { useForm } from 'react-hook-form';
 import Input from '../ui/Input';
+import { setActiveForm } from '../redux/formSlice';
+import SubmitButton from '../ui/SubmitButton';
+import Checkbox from '../ui/Checkbox';
 
 type props = {
   ref?: React.MutableRefObject<undefined>
@@ -30,7 +32,8 @@ const RegistrationForm: FC<props> = () => {
       isValid
     },
     handleSubmit,
-    watch
+    watch,
+    setError,
   } = useForm<FormValues>({
     mode: "onBlur"
   });
@@ -39,14 +42,27 @@ const RegistrationForm: FC<props> = () => {
     try {
       const response = await AuthService.registration(data.username, data.email, data.password);
       if (response) {
-        dispatch(setSuccesReg(true))
+        dispatch(setActiveForm('login'))
         navigate('/auth/login')
       }
-    } catch (e) {
-      if (e.response) {
-        console.log(e.response.data);
+    } catch (error) {
+      if (error.response) {
+        console.log(error.response)
+        const { message, field } = error.response.data;
+        if(field === 'email') {
+          setError('email', {
+            type: "server",
+            message: message,
+          })
+        }
+        if(field === 'username') {
+          setError('username', {
+            type: "server",
+            message: message,
+          })
+        }
       } else {
-        console.log(e);
+        console.log(error);
       }
     }
   }
@@ -85,7 +101,7 @@ const RegistrationForm: FC<props> = () => {
         })}
       /> 
       <Input 
-        label='password'
+        label='Password'
         placeholder='********'
         type='password'
         errors={errors.password?.message}
@@ -115,17 +131,18 @@ const RegistrationForm: FC<props> = () => {
           },
         })}
       /> 
-      <Input 
-        label='Rules and rivate policy (It`s require checkbox)'
-        placeholder=''
+      <Checkbox
+        label='I agree to the Terms of Service and Privacy Policy as well as the Cookies Policy.'
         type='checkbox'
-        errors={errors.checkbox?.message}
-        register={register('checkbox', { 
-          required: 'Checkobx is required'
+        register={register('checkbox' , {
+          required: 'You must agree to these rules'
         })}
-      /> 
-      <div>
-        <input type="submit" disabled={!isValid}/>
+      />
+      <div className={compStyles.loginButtonWrapper}>
+      <SubmitButton
+        isValid={!isValid}
+        text='Sign up'
+      />
       </div>
     </form>
   );

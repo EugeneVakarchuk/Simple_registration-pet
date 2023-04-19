@@ -1,5 +1,6 @@
 import React, { FC, InputHTMLAttributes } from 'react';
-import { UseFormRegisterReturn, MultipleFieldErrors } from "react-hook-form";
+import { UseFormRegisterReturn } from "react-hook-form";
+import uiStyles from '../styles/ui.module.less';
 
 interface props extends InputHTMLAttributes<HTMLInputElement> {
   label: string;
@@ -18,13 +19,20 @@ const Input: FC<props> = ({
   ...inputProps
 }) => {
 
+
+
   return (
-    <div>
-      <label htmlFor={inputProps.id}>{label}
-        <input type={type} placeholder={placeholder} {...register} {...inputProps} />
-      </label>
-      <div>
-        {errors && <span>{errors}</span>}
+    <div className={uiStyles.InputContainer}>
+      <label className={uiStyles.label}>{label}</label>
+      <input
+        className={
+          errors ? `${uiStyles.input} ${uiStyles.InputError}` : uiStyles.input
+        }
+        type={type}
+        placeholder={placeholder}
+        {...register} {...inputProps} />
+      <div className={uiStyles.errorContainer}>
+        {errors && <span className={uiStyles.errorText}>{errors}</span>}
       </div>
     </div>
   );

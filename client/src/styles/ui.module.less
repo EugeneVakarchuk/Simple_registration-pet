@@ -20,13 +20,42 @@
   transition: border .2s;
 }
 
+.InputContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  margin-bottom: 30px;
+  position: relative;
+}
+
+.InputError {
+  border-color: @inputErrorBorderColor;
+  border-width: 2px;
+}
+
 // Label
 
 .label {
+  display: flex;
+  flex-direction: column;
   margin-bottom: 8px;
   font-family: @mainFont;
   font-weight: 400;
   font-size: 1.2rem;
+}
+
+// Error Label
+
+.errorContainer {
+  position: absolute;
+  right: 0;
+  bottom: -1.3rem;
+  margin-left: 15px;
+  color: #a54a4a;
+}
+
+.errorText {
+  font-family: @mainFont;
 }
 
 // Button
@@ -58,7 +87,20 @@
   &:active {
     animation: buttonClick 0.1s both;
   }
+}
 
+.buttonDisable {
+  min-width: 100%;
+  min-height: 100%;
+  padding: 10px;
+  background-color: @buttonBackgroundColorDisable;
+  outline: none;
+  text-align: center;
+  border-radius: 8px;
+  border-style: none;
+  font-family: @mainFont;
+  font-size: 1.1rem;
+  color: #9c9c9c;
 }
 
 // Toggle 
@@ -92,16 +134,11 @@
 // Checkbox
 
 .checkobxContainer {
-  padding: 10px;
+
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-.checkboxLabel {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
+  margin-bottom: 30px;
 }
 
 .checkboxText {
@@ -109,6 +146,13 @@
   margin-left: 5px;
   font-family: @mainFont;
   font-weight: 300;
+  text-align: end;
+}
+
+.checkbox {
+  width: 20px;
+  height: 20px;
+  margin-left: 10px;
 }
 
 // User text value 

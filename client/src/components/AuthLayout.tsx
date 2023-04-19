@@ -5,15 +5,19 @@ import pageStyles from '../styles/pages.module.less'
 import { Outlet, useNavigate } from 'react-router';
 import { SwitchTransition, CSSTransition } from 'react-transition-group';
 import animationStyles from '../styles/formAnimation.module.less';
+import { useAppDispatch, useAppSelector } from '../hooks/redux';
+import { setActiveForm } from '../redux/formSlice';
 
 
 const AuthLayout: FC = () => {
 
   const navigate = useNavigate();
   const outletRef = useRef<HTMLDivElement>(null);
-  const [activeForm, setActiveForm] = useState<'login' | 'signup'>('login');
+  const activeForm = useAppSelector(state => state.formReducer.activeForm);
+  const dispatch = useAppDispatch();
   const [isAnimating, setIsAnimating] = useState(false);
   const animationDuration = 300
+
 
   const changeFormToLogin = () => {
     if (activeForm !== 'login' && !isAnimating) {
@@ -22,7 +26,7 @@ const AuthLayout: FC = () => {
         navigate('login');
         setIsAnimating(false);
       }, animationDuration);
-      setActiveForm('login');
+      dispatch(setActiveForm('login'))
     }
   }
 
@@ -33,7 +37,7 @@ const AuthLayout: FC = () => {
         navigate('signup');
         setIsAnimating(false);
       }, animationDuration);
-      setActiveForm('signup');
+      dispatch(setActiveForm('signup'))
     }
   }
 
