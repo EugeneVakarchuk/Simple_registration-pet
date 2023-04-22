@@ -9,13 +9,15 @@ import AuthLayout from '../components/AuthLayout';
 
 const AuthPage: FC = () => {
 
+  // Get isAuth value from redux store.
   const isAuth = useAppSelector(state => state.authReducer.isAuth);
 
+  // Check if user is logged in and redirect to the /main route.
   useEffect(() => {
     if (!isAuth) {
-      redirect('/main')
-    }
-  })
+      redirect('/main');
+    };
+  }, []);
 
 
 

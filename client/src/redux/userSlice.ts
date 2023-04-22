@@ -17,7 +17,7 @@ export const userSlice = createSlice({
       try {
         state.username = action.payload.username;
         state.email = action.payload.email;
-        state._id = action.payload.id
+        state._id = action.payload.id;
       } catch (e) {
         console.log(e);
       }
@@ -32,7 +32,7 @@ export const userSlice = createSlice({
       }
     }
   }
-})
+});
 
 export default userSlice.reducer;
 export const {

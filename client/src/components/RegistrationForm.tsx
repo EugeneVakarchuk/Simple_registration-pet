@@ -1,6 +1,6 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import AuthService from '../services/AuthService';
-import { useAppDispatch } from '../hooks/redux';
+import { useAppDispatch, useAppSelector } from '../hooks/redux';
 import compStyles from '../styles/comp.module.less'
 import { useNavigate } from 'react-router';
 import { useForm } from 'react-hook-form';
@@ -14,9 +14,18 @@ type props = {
 }
 
 const RegistrationForm: FC<props> = () => {
+
+  // Declare dispatch and navigate.
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
+  // Because default value active form is 'login' after first render, dispatch actual form.
+  // It's needed because if going manually to /auth/signup, active form state changes to 'login'.
+  useEffect(() => {
+    dispatch(setActiveForm('signup'))
+  }, [])
+
+  // Decrale type fields.
   type FormValues = {
     username: string
     email: string
@@ -24,7 +33,8 @@ const RegistrationForm: FC<props> = () => {
     confirmPassword: string
     checkbox: boolean
   }
-  
+
+  // Declare useForm hook.
   const {
     register,
     formState: {
@@ -38,24 +48,41 @@ const RegistrationForm: FC<props> = () => {
     mode: "onBlur"
   });
 
-  const onSubmit = async (data:FormValues) => {
+
+  // Submit function in try-catch block.
+  const onSubmit = async (data: FormValues) => {
     try {
+
+      // Request response from registration endpoint using username, email and password data from form.
       const response = await AuthService.registration(data.username, data.email, data.password);
+
+      // Check if response is defined.
       if (response) {
-        dispatch(setActiveForm('login'))
-        navigate('/auth/login')
-      }
+
+        // Dispatch active form to login.
+        dispatch(setActiveForm('login'));
+
+        // Redirect to login.
+        navigate('/auth/login');
+      };
+
+
     } catch (error) {
+
+      // Check if response data has error.
       if (error.response) {
-        console.log(error.response)
+
+        // Receive message and field from response data.
         const { message, field } = error.response.data;
-        if(field === 'email') {
+
+        // Set error and send message depending on the field
+        if (field === 'email') {
           setError('email', {
             type: "server",
             message: message,
           })
         }
-        if(field === 'username') {
+        if (field === 'username') {
           setError('username', {
             type: "server",
             message: message,
@@ -63,19 +90,19 @@ const RegistrationForm: FC<props> = () => {
         }
       } else {
         console.log(error);
-      }
-    }
-  }
+      };
+    };
+  };
 
 
   return (
     <form className={compStyles.form} onSubmit={handleSubmit(onSubmit)}>
-      <Input 
+      <Input
         label='Username'
         placeholder='Your username'
         type='text'
         errors={errors?.username?.message}
-        register={register('username', { 
+        register={register('username', {
           required: 'First name is required',
           minLength: {
             value: 4,
@@ -87,25 +114,25 @@ const RegistrationForm: FC<props> = () => {
           },
         })}
       />
-      <Input 
+      <Input
         label='Email'
         placeholder='example@email.com'
         type='text'
         errors={errors.email?.message}
-        register={register('email', { 
+        register={register('email', {
           required: 'Email is required',
           pattern: {
             value: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
             message: 'Please enter a valid email',
           }
         })}
-      /> 
-      <Input 
+      />
+      <Input
         label='Password'
         placeholder='********'
         type='password'
         errors={errors.password?.message}
-        register={register('password', { 
+        register={register('password', {
           required: 'Password is required',
           minLength: {
             value: 8,
@@ -116,13 +143,13 @@ const RegistrationForm: FC<props> = () => {
             message: 'Password must be between 8 and 16 characters'
           },
         })}
-      /> 
-      <Input 
+      />
+      <Input
         label='Confirm password'
         placeholder='********'
         type='password'
         errors={errors.confirmPassword?.message}
-        register={register('confirmPassword', { 
+        register={register('confirmPassword', {
           required: 'Password is required',
           validate: (val: string) => {
             if (watch('password') != val) {
@@ -130,112 +157,22 @@ const RegistrationForm: FC<props> = () => {
             }
           },
         })}
-      /> 
+      />
       <Checkbox
         label='I agree to the Terms of Service and Privacy Policy as well as the Cookies Policy.'
         type='checkbox'
-        register={register('checkbox' , {
+        register={register('checkbox', {
           required: 'You must agree to these rules'
         })}
       />
       <div className={compStyles.loginButtonWrapper}>
-      <SubmitButton
-        isValid={!isValid}
-        text='Sign up'
-      />
+        <SubmitButton
+          isValid={!isValid}
+          text='Sign up'
+        />
       </div>
     </form>
   );
 };
 
 export default RegistrationForm;
-// import React, { FC, useState } from 'react';
-// import AuthService from '../services/AuthService';
-// import { useAppDispatch } from '../hooks/redux';
-// import { setSuccesReg } from '../redux/authSlice';
-// import Input from '../ui/Input';
-// import Button from '../ui/Button';
-// import compStyles from '../styles/comp.module.less'
-// import Checkbox from '../ui/Checkbox';
-// import { useNavigate } from 'react-router';
-
-// type props = {
-//   ref?: React.MutableRefObject<undefined>
-// }
-
-// const RegistrationForm: FC<props> = () => {
-
-//   const [email, setEmail] = useState<string>('');
-//   const [password, setPassword] = useState<string>('');
-//   const [username, setUsername] = useState<string>('');
-//   const navigate = useNavigate();
-//   const dispatch = useAppDispatch();
-  
-
-//   const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-//     setEmail(event.target.value);
-//   };
-
-//   const handlePasswordChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-//     setPassword(event.target.value);
-//   };
-
-//   const handleUsernameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-//     setUsername(event.target.value);
-//   };
-
-
-//   const registerButton = async () => {
-//     try {
-//       const response = await AuthService.registration(username, email, password);
-//       if (response) {
-//         dispatch(setSuccesReg(true))
-//         navigate('/auth/login')
-//       }
-//     } catch (e) {
-//       if (e.response) {
-//         console.log(e.response.data);
-//       } else {
-//         console.log(e);
-//       }
-//     }
-//   }
-
-//   return (
-//     <div className={compStyles.form}>
-//       <div className={compStyles.formInputContainer}>
-//         <div className={compStyles.formInputWrapper}>
-//           <Input
-//             type='text'
-//             placeholder='Example'
-//             onChange={handleUsernameChange}
-//             value={username}
-//             label='Username'
-//           />
-//         </div>
-//         <div className={compStyles.formInputWrapper}>
-//           <Input
-//             type='text'
-//             placeholder='example@email.com'
-//             onChange={handleEmailChange}
-//             value={email}
-//             label='Email'
-//           />
-//         </div>
-//         <div className={compStyles.formInputWrapper}>
-//           <Input
-//             type='password'
-//             placeholder='**********'
-//             onChange={handlePasswordChange}
-//             value={password}
-//             label='Password'
-//           />
-//         </div>
-//         <Checkbox label="I agree to the Terms of Service and Privacy Policy as well as the Cookies Policy." />
-//       </div>
-//       <Button onClick={registerButton}>Sing up</Button>
-//     </div>
-//   );
-// };
-
-// export default RegistrationForm;

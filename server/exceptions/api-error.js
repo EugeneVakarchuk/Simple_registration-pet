@@ -1,3 +1,5 @@
+// It is error handler and it has custom fields and creates new instance of class with defined message or status code.
+// Instances of this class are processed in error middleware.
 module.exports = class ApiError extends Error {
   status;
   field;

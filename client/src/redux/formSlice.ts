@@ -5,7 +5,7 @@ type formTypes = {
 }
 
 const initialState: formTypes = {
-  activeForm: 'login'
+  activeForm: 'login',
 }
 
 export const formSlice = createSlice({
@@ -14,13 +14,13 @@ export const formSlice = createSlice({
   reducers: {
     setActiveForm(state, action) {
       try {
-        state.activeForm = action.payload
+        state.activeForm = action.payload;
       } catch (e) {
-        console.log(e)
+        console.log(e);
       }
     }
   }
-})
+});
 
 export default formSlice.reducer;
 export const {

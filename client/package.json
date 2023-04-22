@@ -4,7 +4,7 @@
   "description": "client side from simple registration",
   "main": "index.js",
   "scripts": {
-    "devServer": "webpack-dev-server --open"
+    "dev": "webpack-dev-server --open"
   },
   "keywords": [
     "registration",

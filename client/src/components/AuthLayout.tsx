@@ -11,14 +11,16 @@ import { setActiveForm } from '../redux/formSlice';
 
 const AuthLayout: FC = () => {
 
+  // Create states.
   const navigate = useNavigate();
   const outletRef = useRef<HTMLDivElement>(null);
   const activeForm = useAppSelector(state => state.formReducer.activeForm);
   const dispatch = useAppDispatch();
   const [isAnimating, setIsAnimating] = useState(false);
-  const animationDuration = 300
+  const animationDuration = 300;
 
 
+  // This function is for switching to the login form.
   const changeFormToLogin = () => {
     if (activeForm !== 'login' && !isAnimating) {
       setIsAnimating(true);
@@ -26,10 +28,11 @@ const AuthLayout: FC = () => {
         navigate('login');
         setIsAnimating(false);
       }, animationDuration);
-      dispatch(setActiveForm('login'))
-    }
-  }
+      dispatch(setActiveForm('login'));
+    };
+  };
 
+  // This function is for switching to the signup.
   const changeFormToRegistration = () => {
     if (activeForm !== 'signup' && !isAnimating) {
       setIsAnimating(true);
@@ -37,10 +40,11 @@ const AuthLayout: FC = () => {
         navigate('signup');
         setIsAnimating(false);
       }, animationDuration);
-      dispatch(setActiveForm('signup'))
-    }
-  }
+      dispatch(setActiveForm('signup'));
+    };
+  };
 
+  // This function is used for when the form is exited.
   const onExited = () => {
     const form = outletRef.current;
     if (form) {
@@ -49,8 +53,8 @@ const AuthLayout: FC = () => {
       setTimeout(() => {
         form.classList.remove('form-enter');
       }, animationDuration);
-    }
-  }
+    };
+  };
 
   return (
     <div className={pageStyles.authWrapper}>

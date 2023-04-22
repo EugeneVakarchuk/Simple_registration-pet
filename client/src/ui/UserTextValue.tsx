@@ -2,9 +2,9 @@ import React, { FC } from 'react';
 import uiStyles from '../styles/ui.module.less';
 
 type props = {
-  valueName: string
-  value: string
-}
+  valueName: string;
+  value: string;
+};
 
 const UserTextValue: FC<props> = (props) => {
   return (

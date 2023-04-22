@@ -7,8 +7,8 @@ interface props extends InputHTMLAttributes<HTMLInputElement> {
   placeholder: string;
   type: string;
   errors?: string | undefined;
-  register: UseFormRegisterReturn
-}
+  register: UseFormRegisterReturn;
+};
 
 const Input: FC<props> = ({
   label,
@@ -18,8 +18,6 @@ const Input: FC<props> = ({
   register,
   ...inputProps
 }) => {
-
-
 
   return (
     <div className={uiStyles.InputContainer}>

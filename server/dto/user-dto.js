@@ -1,3 +1,4 @@
+// User Data Transfer Object.
 module.exports = class UserDto {
   username;
   email;

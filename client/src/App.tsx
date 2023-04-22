@@ -12,42 +12,59 @@ import { RequireAuth } from "./hoc/RequireAuth";
 
 const App: React.FC = () => {
 
+  // Get isAuth state from redux.
   const isAuth = useAppSelector(state => state.authReducer.isAuth);
 
+  // Declare dispatch and navigate function.
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const [isLoading, setIsLoading] = useState<boolean>(false)
+  // Create state isLoading.
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
+
+  // Check if there is a token in local storage after first render.
   useEffect(() => {
+
+    // If local storage have the token, then declare checkAuth function to /refresh endpoint.
     if (!!localStorage.getItem('token')) {
       const checkAuth = async () => {
         const response = await axios.get(`${process.env.API_URL}/refresh`, { withCredentials: true });
         localStorage.setItem('token', response.data.accessToken);
         return response;
-      }
+      };
+
+      // Give response using checkAuth function.
       const response = checkAuth();
       response.then(data => {
-        const user = data?.data?.user
+
+        // Get user data in response.
+        const user = data?.data?.user;
+
+        // Dispatch data.
         dispatch(setAuth(true));
         dispatch(login({
           username: user.username,
           email: user.email,
           id: user.id
-        }))
+        }));
+
+        // Set isLoading to false.
         setIsLoading(false);
       }).catch(error => {
         setIsLoading(false);
         console.log(error)
-      })
-    }
-  }, [])
+      });
+    };
+  }, []);
 
+
+  // If user is authorized redirect to /main. 
   useEffect(() => {
     if (!isLoading && isAuth) {
-      navigate('/main')
-    }
-  }, [isLoading, isAuth])
+      navigate('/main');
+    };
+  }, [isLoading, isAuth]);
 
   return (
     <div className={classes.App}>

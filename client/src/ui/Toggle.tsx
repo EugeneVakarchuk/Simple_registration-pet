@@ -2,10 +2,10 @@ import React, { FC, MouseEvent } from 'react';
 import classes from '../styles/ui.module.less';
 
 type props = {
-  children: string
+  children: string;
   onClick: (event: MouseEvent<HTMLButtonElement>) => void;
-  active?: boolean
-}
+  active?: boolean;
+};
 
 const Toggle: FC<props> = (props) => {
   return (

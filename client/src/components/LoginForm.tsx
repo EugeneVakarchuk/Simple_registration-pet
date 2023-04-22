@@ -15,14 +15,17 @@ type props = {
 
 const LoginForm: FC<props> = () => {
 
+  // Declare dispatch and navigate.
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
+  // Declare fields of the form's types.
   type FormValues = {
     email: string
     password: string
   }
 
+  // Declare useForm hook.
   const {
     register,
     formState: {
@@ -35,36 +38,54 @@ const LoginForm: FC<props> = () => {
     mode: "onBlur"
   });
 
+  // Submit Function in try-catch block.
   const onSubmit = async (data: FormValues) => {
     try {
+
+      // Receive data from /login endpoint.
       const response = await AuthService.login(data.email, data.password);
+
+      // Check is response is defined.
       if (!!response) {
+
+        // Dispatch user data.
         dispatch(login({
           username: response.data.user.username,
           email: response.data.user.email,
           id: response.data.user._id
-        }))
-        dispatch(setAuth(true))
-        localStorage.setItem('token', response.data.accessToken)
-        navigate('/main')
-        console.log(response)
+        }));
+
+        // Dispatch isAuth state.
+        dispatch(setAuth(true));
+
+        // Save accessToken in local storage.
+        localStorage.setItem('token', response.data.accessToken);
+
+        // Redirect to /main url.
+        navigate('/main');
       }
+
+
     } catch (error) {
+
+      // Receive message and field from response data.
       const { message, field } = error.response.data;
+
+      // Set error and send message depending on the filed. 
       if (field === 'email') {
         setError('email', {
           type: "server",
           message: message,
         });
-      }
+      };
       if (field === 'password') {
         setError('password', {
           type: "server",
           message: message,
         });
-      }
-    }
-  }
+      };
+    };
+  };
 
   return (
     <form className={compStyles.form} onSubmit={handleSubmit(onSubmit)}>

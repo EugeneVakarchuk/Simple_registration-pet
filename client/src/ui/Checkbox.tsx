@@ -6,8 +6,8 @@ interface props extends InputHTMLAttributes<HTMLInputElement> {
   label: string;
   type: string;
   errors?: string | undefined;
-  register: UseFormRegisterReturn
-}
+  register: UseFormRegisterReturn;
+};
 
 const Checkbox: FC<props> = ({
   label,

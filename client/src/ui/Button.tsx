@@ -4,7 +4,7 @@ import classes from '../styles/ui.module.less';
 type props = {
   children: ReactNode;
   onClick: (event: MouseEvent<HTMLButtonElement>) => void;
-}
+};
 
 const Button: FC<props> = ({ children, onClick }) => {
   return (

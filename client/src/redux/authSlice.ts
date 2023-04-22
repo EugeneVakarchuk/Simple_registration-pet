@@ -10,13 +10,13 @@ export const authSlice = createSlice({
   reducers: {
     setAuth(state, action) {
       try {
-        state.isAuth = action.payload
+        state.isAuth = action.payload;
       } catch (e) {
-        console.log(e)
+        console.log(e);
       }
     }
   }
-})
+});
 
 export default authSlice.reducer;
 export const {

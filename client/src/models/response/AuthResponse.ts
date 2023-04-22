@@ -4,5 +4,5 @@ export interface AuthResponse {
   accessToken: string;
   refreshToken: string;
   user: IUser;
-  message?: string
+  message?: string;
 }
